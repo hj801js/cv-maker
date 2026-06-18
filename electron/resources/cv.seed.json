@@ -1,0 +1,255 @@
+{
+  "_meta": { "schemaVersion": 4 },
+  "settings": { "lang": "en" },
+  "hiddenSections": { "ko": [], "en": [] },
+  "ko": {
+    "basicInfo": {
+      "name": "홍길동",
+      "nameEn": "Gildong Hong",
+      "title": "전력시스템 연구원",
+      "tagline": "전력 시스템과 신호 처리를 연구하는 엔지니어",
+      "affiliation": "예시 연구소",
+      "dateOfBirth": "",
+      "email": "gildong.hong@example.com",
+      "phone": "",
+      "address": "",
+      "citizenship": "대한민국",
+      "website": "https://example.com",
+      "linkedin": "",
+      "github": "",
+      "orcid": "",
+      "photo": ""
+    },
+    "summary": "전력 전자와 제어를 중심으로 한 연구·개발 경험을 갖춘 엔지니어입니다. 이 이력서는 CV Maker의 예시(샘플) 데이터이며, 실제 인물과 무관합니다.",
+    "specialties": ["전력 시스템 모델링", "디지털 신호 처리", "실시간 시뮬레이션"],
+    "certifications": ["전기기사", "정보처리기사"],
+    "memberships": ["대한전기학회"],
+    "researchField": {
+      "title": "전력 전자 및 제어",
+      "items": ["컨버터 제어", "계통 보호", "실시간 시뮬레이션"]
+    },
+    "experiences": [
+      {
+        "company": "예시 연구소",
+        "location": "서울",
+        "role": "선임 연구원",
+        "startDate": "2020-03",
+        "endDate": null,
+        "responsibilities": ["전력 변환 장치 설계 및 검증", "실시간 시뮬레이션 모델 개발"]
+      },
+      {
+        "company": "예시 테크",
+        "location": "대전",
+        "role": "엔지니어",
+        "startDate": "2017-01",
+        "endDate": "2020-02",
+        "responsibilities": ["임베디드 펌웨어 개발", "시험 자동화 환경 구축"]
+      }
+    ],
+    "projects": [
+      {
+        "title": "예시 전력 변환 시스템 개발",
+        "startYear": 2021,
+        "endYear": 2023,
+        "description": "예시 과제 설명입니다. 컨버터 제어 알고리즘을 개발하고 시제품을 검증했습니다.",
+        "partner": "예시 대학교",
+        "achievement": "시제품 개발 및 시험 완료"
+      }
+    ],
+    "hardwareExperiences": [
+      {
+        "title": "예시 제어 보드 설계",
+        "startYear": 2019,
+        "endYear": 2020,
+        "details": ["DSP 기반 제어기 설계", "PCB 설계 및 시험"]
+      }
+    ],
+    "education": [
+      {
+        "degree": "공학박사 (전기공학)",
+        "university": "예시 대학교",
+        "location": "서울",
+        "year": 2017,
+        "dissertation": "예시 학위 논문 제목",
+        "supervisor": "지도교수",
+        "researchInterests": ["전력 전자", "제어"],
+        "extras": []
+      },
+      {
+        "degree": "공학학사 (전기공학)",
+        "university": "예시 대학교",
+        "location": "서울",
+        "year": 2011,
+        "dissertation": "",
+        "supervisor": "",
+        "researchInterests": [],
+        "extras": []
+      }
+    ],
+    "publications": {
+      "journals": [
+        {
+          "authors": "G. Hong, et al.",
+          "title": "A Study on an Example Power Converter",
+          "venue": "Sample Journal of Power Electronics",
+          "date": "2022-06"
+        },
+        {
+          "authors": "G. Hong, A. Example",
+          "title": "An Example Method for Real-Time Simulation",
+          "venue": "Sample Transactions on Energy",
+          "date": "2020-03"
+        }
+      ],
+      "conferences": [
+        {
+          "authors": "G. Hong, et al.",
+          "title": "An Example Conference Paper",
+          "venue": "Sample International Conference",
+          "date": "2021"
+        }
+      ]
+    },
+    "patents": [
+      {
+        "authors": "G. Hong, et al.",
+        "title": "Example Apparatus and Method for Power Conversion",
+        "number": "KR-0000000",
+        "year": 2022,
+        "status": "Registered"
+      }
+    ],
+    "skills": {
+      "technical": ["C/C++", "Python", "MATLAB", "PSCAD/EMTDC"],
+      "languages": [
+        { "name": "한국어", "level": "원어민" },
+        { "name": "English", "level": "Professional" }
+      ]
+    }
+  },
+  "en": {
+    "basicInfo": {
+      "name": "Gildong Hong",
+      "nameEn": "Gildong Hong",
+      "title": "Power Systems Researcher",
+      "tagline": "Engineer researching power systems and signal processing",
+      "affiliation": "Example Research Institute",
+      "dateOfBirth": "",
+      "email": "gildong.hong@example.com",
+      "phone": "",
+      "address": "",
+      "citizenship": "Republic of Korea",
+      "website": "https://example.com",
+      "linkedin": "",
+      "github": "",
+      "orcid": "",
+      "photo": ""
+    },
+    "summary": "An engineer with R&D experience centered on power electronics and control. This résumé is sample data shipped with CV Maker and does not represent a real person.",
+    "specialties": ["Power system modeling", "Digital signal processing", "Real-time simulation"],
+    "certifications": ["Professional Engineer, Electricity", "Engineer Information Processing"],
+    "memberships": ["KIEE"],
+    "researchField": {
+      "title": "Power Electronics and Control",
+      "items": ["Converter control", "Grid protection", "Real-time simulation"]
+    },
+    "experiences": [
+      {
+        "company": "Example Research Institute",
+        "location": "Seoul",
+        "role": "Senior Researcher",
+        "startDate": "2020-03",
+        "endDate": null,
+        "responsibilities": ["Design and verification of power conversion equipment", "Development of real-time simulation models"]
+      },
+      {
+        "company": "Example Tech",
+        "location": "Daejeon",
+        "role": "Engineer",
+        "startDate": "2017-01",
+        "endDate": "2020-02",
+        "responsibilities": ["Embedded firmware development", "Test automation setup"]
+      }
+    ],
+    "projects": [
+      {
+        "title": "Development of an Example Power Conversion System",
+        "startYear": 2021,
+        "endYear": 2023,
+        "description": "Sample project description: developed a converter control algorithm and verified a prototype.",
+        "partner": "Example University",
+        "achievement": "Prototype developed and tested"
+      }
+    ],
+    "hardwareExperiences": [
+      {
+        "title": "Example Control Board Design",
+        "startYear": 2019,
+        "endYear": 2020,
+        "details": ["DSP-based controller design", "PCB design and testing"]
+      }
+    ],
+    "education": [
+      {
+        "degree": "Ph.D. in Electrical Engineering",
+        "university": "Example University",
+        "location": "Seoul",
+        "year": 2017,
+        "dissertation": "An Example Dissertation Title",
+        "supervisor": "Advisor Name",
+        "researchInterests": ["Power electronics", "Control"],
+        "extras": []
+      },
+      {
+        "degree": "B.S. in Electrical Engineering",
+        "university": "Example University",
+        "location": "Seoul",
+        "year": 2011,
+        "dissertation": "",
+        "supervisor": "",
+        "researchInterests": [],
+        "extras": []
+      }
+    ],
+    "publications": {
+      "journals": [
+        {
+          "authors": "G. Hong, et al.",
+          "title": "A Study on an Example Power Converter",
+          "venue": "Sample Journal of Power Electronics",
+          "date": "2022-06"
+        },
+        {
+          "authors": "G. Hong, A. Example",
+          "title": "An Example Method for Real-Time Simulation",
+          "venue": "Sample Transactions on Energy",
+          "date": "2020-03"
+        }
+      ],
+      "conferences": [
+        {
+          "authors": "G. Hong, et al.",
+          "title": "An Example Conference Paper",
+          "venue": "Sample International Conference",
+          "date": "2021"
+        }
+      ]
+    },
+    "patents": [
+      {
+        "authors": "G. Hong, et al.",
+        "title": "Example Apparatus and Method for Power Conversion",
+        "number": "KR-0000000",
+        "year": 2022,
+        "status": "Registered"
+      }
+    ],
+    "skills": {
+      "technical": ["C/C++", "Python", "MATLAB", "PSCAD/EMTDC"],
+      "languages": [
+        { "name": "Korean", "level": "Native" },
+        { "name": "English", "level": "Professional" }
+      ]
+    }
+  }
+}

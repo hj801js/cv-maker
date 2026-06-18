@@ -1,0 +1,63 @@
+/* Print / PDF styles. Activated by `print-mode` on <body> and by @media print.
+   Each .cv-sheet is exactly one A4 page; its 14mm/12mm padding provides the
+   margins on every page, so @page itself needs no margin. */
+@page {
+  size: A4;
+  margin: 0;
+}
+
+@media print {
+  .no-print { display: none !important; }
+  .cv-measure { display: none !important; }
+  html, body { background: #fff !important; }
+  .cv-preview { display: block !important; gap: 0 !important; }
+  .preview-scroll { overflow: visible !important; padding: 0 !important; }
+  .cv-sheet {
+    box-shadow: none !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    min-height: 0 !important;
+    margin: 0 !important;
+    break-after: page;
+    page-break-after: always;
+  }
+  .cv-sheet:last-child {
+    break-after: auto;
+    page-break-after: avoid;
+  }
+}
+
+body.print-mode { background: #fff !important; }
+body.print-mode .no-print { display: none !important; }
+body.print-mode .cv-measure { display: none !important; }
+body.print-mode .app-shell { display: block; height: auto; background: #fff !important; }
+body.print-mode .app-main {
+  display: block;
+  overflow: visible;
+  padding: 0 !important;
+  background: #fff !important;
+}
+body.print-mode .preview-scroll { overflow: visible; padding: 0; }
+body.print-mode .cv-preview { display: block; gap: 0; }
+body.print-mode .cv-sheet {
+  box-shadow: none !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  min-height: 0 !important;
+  margin: 0 !important;
+  break-after: page;
+  page-break-after: always;
+}
+body.print-mode .cv-sheet:last-child {
+  break-after: auto;
+  page-break-after: avoid;
+}
+
+/* Safety net: if a sheet ever slightly overflows, break at item boundaries. */
+.cv-h2 { break-after: avoid-page; page-break-after: avoid; }
+.cv-header { break-inside: avoid-page; page-break-inside: avoid; }
+.entry-row { break-inside: avoid-page; page-break-inside: avoid; }
+.pub-item,
+.cv-trow,
+.cv-bullets-inline li { break-inside: avoid-page; page-break-inside: avoid; }
+.cv-thead { break-after: avoid-page; page-break-after: avoid; }

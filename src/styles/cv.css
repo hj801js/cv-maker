@@ -1,0 +1,262 @@
+/* CV document styles — paginated A4 sheets.
+   PreviewPane renders one .cv-sheet per page (on-screen and in PDF export);
+   .cv-measure is an off-screen copy used only to measure block heights.
+
+   Typography + rule width come from CSS variables set on .cv-preview by the
+   style sidebar (see useCv.js styleVars); the var() fallbacks below are the
+   defaults. Body sizes scale with --cv-body-size via calc() so the whole
+   document grows/shrinks proportionally. */
+
+.cv-preview {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+}
+
+/* Shared typography so measured heights match rendered sheets exactly. */
+.cv-sheet,
+.cv-measure {
+  background: #fff;
+  color: #222;
+  box-sizing: border-box;
+  font-family: "Source Sans Pro", -apple-system, BlinkMacSystemFont, "Segoe UI",
+               "Apple SD Gothic Neo", "Malgun Gothic", "맑은 고딕", Roboto, sans-serif;
+  font-size: var(--cv-body-size, 12px);
+  line-height: var(--cv-line-height, 1.5);
+}
+
+.cv-sheet {
+  position: relative;
+  width: 210mm;
+  max-width: 100%;
+  min-height: 297mm;
+  padding: 14mm 12mm;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.10);
+}
+.cv-sheet > :first-child { margin-top: 0; }
+.cv-sheet-num {
+  position: absolute;
+  bottom: 5mm;
+  right: 12mm;
+  font-size: 10px;
+  color: #9aa3ad;
+  font-style: italic;
+}
+
+/* Off-screen measurer at page content width (210mm − 2×12mm = 186mm). */
+.cv-measure {
+  position: absolute;
+  left: -99999px;
+  top: 0;
+  width: 186mm;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+/* ----- Header ----- */
+.cv-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 24px;
+  padding-bottom: 12px;
+  margin-bottom: 22px;
+  border-bottom: var(--cv-rule-width, 1.5px) solid #d0d4db;
+}
+.cv-header-left { flex: 1; min-width: 0; }
+.cv-name {
+  font-size: var(--cv-name-size, 28px);
+  font-weight: 700;
+  margin: 0 0 4px;
+  color: #1a1a1a;
+  letter-spacing: -0.01em;
+}
+.cv-name-en {
+  font-size: 15px;
+  font-weight: 400;
+  color: #777;
+  letter-spacing: 0;
+}
+.cv-tagline {
+  margin: 0;
+  font-style: italic;
+  color: #555;
+  font-size: calc(var(--cv-body-size, 12px) * 1.083);
+}
+.cv-header-right {
+  text-align: right;
+  font-size: calc(var(--cv-body-size, 12px) * 0.917);
+  color: #555;
+  flex-shrink: 0;
+}
+.cv-header-right p {
+  margin: 0 0 2px;
+  white-space: nowrap;
+}
+
+/* Optional profile photo (top-right of header) */
+.cv-photo {
+  width: 28mm;
+  height: 35mm;
+  object-fit: cover;
+  align-self: flex-start;
+  border: 1px solid #d0d4db;
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+
+/* External links (email, ORCID, website, social) */
+.cv-link {
+  color: #2f6feb;
+  text-decoration: none;
+  cursor: pointer;
+}
+.cv-link:hover {
+  text-decoration: underline;
+}
+
+/* ----- Section heading ----- */
+.cv-h2 {
+  position: relative;
+  font-size: var(--cv-heading-size, 13.5px);
+  font-weight: 600;
+  color: #2f6feb;
+  margin: 16px 0 8px;
+  padding: 0 0 4px 22px;
+  border-bottom: var(--cv-rule-width, 1.5px) solid #d0dcf0;
+  letter-spacing: 0.02em;
+}
+.cv-h2::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 6px;
+  width: 14px;
+  height: 3px;
+  background: #2f6feb;
+  border-radius: 2px;
+}
+.cv-section-intro {
+  font-size: calc(var(--cv-body-size, 12px) * 1.042);
+  margin: 4px 0 8px;
+}
+.cv-para {
+  margin: 3px 0;
+}
+
+/* Inline bullet lists */
+.cv-bullets-inline {
+  margin: 4px 0 6px;
+  padding-left: 18px;
+  list-style: disc;
+}
+.cv-bullets-inline li {
+  margin-bottom: 2px;
+}
+
+/* ----- Info list (definition list) ----- */
+.info-list {
+  display: grid;
+  grid-template-columns: 110px 1fr;
+  gap: 4px 16px;
+  margin: 0;
+  font-size: var(--cv-body-size, 12px);
+}
+.info-list dt {
+  color: #666;
+  font-size: calc(var(--cv-body-size, 12px) * 0.917);
+  padding-top: 1px;
+}
+.info-list dd {
+  margin: 0;
+  color: #222;
+}
+
+/* ----- Entry row (date | body) ----- */
+.entry-row {
+  display: grid;
+  grid-template-columns: 130px 1fr;
+  gap: 12px;
+  margin-bottom: 10px;
+  align-items: start;
+}
+.entry-date {
+  color: #5b6573;
+  font-size: calc(var(--cv-body-size, 12px) * 0.917);
+  font-style: italic;
+  padding-top: 1px;
+  white-space: nowrap;
+}
+.entry-body strong {
+  font-size: calc(var(--cv-body-size, 12px) * 1.042);
+  color: #1a1a1a;
+}
+.entry-sub {
+  color: #444;
+  font-weight: 400;
+}
+.entry-sub.muted {
+  color: #888;
+  font-style: italic;
+}
+.entry-body p {
+  margin: 2px 0;
+}
+.entry-body ul {
+  margin: 4px 0 4px;
+  padding-left: 18px;
+}
+.entry-body ul li {
+  margin-bottom: 2px;
+}
+.meta-label {
+  color: #666;
+  font-size: calc(var(--cv-body-size, 12px) * 0.917);
+  font-weight: 600;
+  margin-right: 2px;
+}
+
+/* ----- Numbered publication / patent items ----- */
+.pub-item {
+  display: grid;
+  grid-template-columns: 20px 1fr;
+  gap: 4px;
+  font-size: calc(var(--cv-body-size, 12px) * 0.958);
+  line-height: 1.4;
+  margin-bottom: 5px;
+}
+.pub-num { color: #5b6573; }
+
+/* ----- Korean table layout (번호 · 내용 · 날짜) ----- */
+.cv-thead,
+.cv-trow {
+  display: grid;
+  grid-template-columns: 26px 1fr;
+  gap: 10px;
+  align-items: start;
+}
+.cv-thead.has-date,
+.cv-trow.has-date {
+  grid-template-columns: 26px 1fr 96px;
+}
+.cv-thead {
+  font-size: calc(var(--cv-body-size, 12px) * 0.917);
+  font-weight: 600;
+  color: #5b6573;
+  border-bottom: 1px solid #c9d3e2;
+  padding-bottom: 3px;
+  margin: 2px 0 1px;
+}
+.cv-trow {
+  font-size: calc(var(--cv-body-size, 12px) * 0.958);
+  line-height: 1.4;
+  padding: 5px 0;
+  border-bottom: 0.5px solid #e6e9ee;
+}
+.cv-trow .t-num { color: #5b6573; }
+.cv-trow .t-date,
+.cv-thead .t-date { color: #5b6573; font-size: calc(var(--cv-body-size, 12px) * 0.917); white-space: nowrap; }
+.cv-trow .t-content strong { font-size: var(--cv-body-size, 12px); color: #1a1a1a; }
+.cv-trow .t-line { margin: 2px 0; }
+.cv-trow .cv-bullets-inline { margin: 3px 0 0; }
