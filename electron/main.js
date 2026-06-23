@@ -317,6 +317,20 @@ async function runSmoke() {
   const rec = (name, ok, detail) => steps.push({ name, ok: !!ok, detail });
   const evalJs = (code) => mainWindow.webContents.executeJavaScript(code, true);
   const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+  // Optional: capture a PNG of the current window for README screenshots.
+  const shot = async (name) => {
+    if (!process.env.CVMAKER_SHOT_DIR) return;
+    try {
+      // Wait for the latest DOM to actually paint, else capturePage may grab a
+      // stale (e.g. still-loading) frame.
+      await mainWindow.webContents.executeJavaScript(
+        'new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r)))'
+      );
+      await new Promise((r) => setTimeout(r, 150));
+      const img = await mainWindow.webContents.capturePage();
+      await fs.writeFile(path.join(process.env.CVMAKER_SHOT_DIR, name), img.toPNG());
+    } catch {}
+  };
   try {
     try { mainWindow.show(); mainWindow.focus(); } catch {}
     // Renderer mounts + completes its IPC load (.app-main renders only when
@@ -350,6 +364,7 @@ async function runSmoke() {
     rec('profileDropdown', profileCount > 0, { profileCount });
     const navCount = await evalJs("document.querySelectorAll('.section-nav .nav-item').length");
     rec('sectionNav', navCount > 0, { navCount });
+    await shot('editor.png'); // editor view (English)
 
     // Language toggle flips the active language in the live renderer.
     const langBefore = await evalJs("(document.querySelector('.lang-switch button.active') || {}).textContent || ''");
@@ -380,6 +395,7 @@ async function runSmoke() {
     await sleep(300);
     const sizeReset = await evalJs("getComputedStyle(document.querySelector('.cv-sheet')).fontSize");
     rec('styleReset', sizeReset === sizeBefore, { sizeReset });
+    await shot('preview.png'); // preview + style sidebar (Korean)
 
     await evalJs("document.body.classList.add('print-mode'); true");
     await sleep(300);
