@@ -18,8 +18,10 @@ const pngBuffers = await Promise.all(
   sizes.map((s) => sharp(svg, { density: 512 }).resize(s, s).png().toBuffer())
 );
 
-// 256px PNG for the BrowserWindow / non-Windows window icon.
-writeFileSync(path.join(buildDir, 'icon.png'), pngBuffers[sizes.indexOf(256)]);
+// 1024px PNG: used as the BrowserWindow icon and as the source electron-builder
+// converts into the macOS (.icns) and Linux icons.
+const png1024 = await sharp(svg, { density: 512 }).resize(1024, 1024).png().toBuffer();
+writeFileSync(path.join(buildDir, 'icon.png'), png1024);
 
 // Multi-resolution .ico for the Windows exe + installer (electron-builder).
 const ico = await pngToIco(pngBuffers);
