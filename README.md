@@ -4,6 +4,8 @@
 
 [![CI](https://github.com/hj801js/cv-maker/actions/workflows/ci.yml/badge.svg)](https://github.com/hj801js/cv-maker/actions/workflows/ci.yml)
 
+📖 **사용 설명서: [docs/manual.html](docs/manual.html)** — 브라우저에서 열면 모든 기능을 그림과 함께 볼 수 있습니다.
+
 오프라인 데스크톱 이력서(CV) 편집기입니다. **Electron + Vue 3**으로 만들었고, 데이터는
 서버 없이 로컬 JSON 파일에 저장됩니다. 한 사람의 이력서를 **한국어 / 영어 두 벌**로 따로
 관리하고, 화면에서 본 그대로 **A4 PDF**로 내보낼 수 있습니다.
