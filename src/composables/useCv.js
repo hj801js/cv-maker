@@ -2,6 +2,7 @@ import { reactive, ref, watch, computed, onMounted, onBeforeUnmount } from 'vue'
 import { MAIN_SECTION_KEYS } from '../schema.js';
 import { normalizeOrder } from '../lib/order.js';
 import { normalizeTitle, classify, sortPublicationsNewestFirst } from '../lib/publications.js';
+import { normalizeCv } from '../lib/normalizeCv.js';
 
 const state = reactive({
   data: null,
@@ -150,8 +151,8 @@ async function load() {
       state.data = res.data;
       // Make sure both language roots and ancillary fields exist (defensive).
       if (!state.data.settings) state.data.settings = { lang: 'en' };
-      if (!state.data.ko || typeof state.data.ko !== 'object') state.data.ko = {};
-      if (!state.data.en || typeof state.data.en !== 'object') state.data.en = {};
+      state.data.ko = normalizeCv(state.data.ko);
+      state.data.en = normalizeCv(state.data.en);
       if (!state.data.hiddenSections) state.data.hiddenSections = { ko: [], en: [] };
       if (!Array.isArray(state.data.tableSections)) state.data.tableSections = [];
       state.data.style = { ...DEFAULT_STYLE, ...(state.data.style && typeof state.data.style === 'object' ? state.data.style : {}) };
@@ -346,7 +347,7 @@ async function importData() {
   if (!res.ok) return res;
   if (!state.data) return { ok: false, error: '데이터가 아직 로드되지 않았습니다.' };
   const l = res.lang === 'ko' ? 'ko' : 'en';
-  state.data[l] = res.cv || {};
+  state.data[l] = normalizeCv(res.cv);
   if (!state.data.hiddenSections) state.data.hiddenSections = { ko: [], en: [] };
   state.data.hiddenSections[l] = Array.isArray(res.hidden) ? res.hidden : [];
   setLang(l); // switch to the imported language
