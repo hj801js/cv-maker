@@ -20,8 +20,8 @@
   background: #fff;
   color: #222;
   box-sizing: border-box;
-  font-family: "Source Sans Pro", -apple-system, BlinkMacSystemFont, "Segoe UI",
-               "Apple SD Gothic Neo", "Malgun Gothic", "맑은 고딕", Roboto, sans-serif;
+  font-family: var(--cv-font, "Source Sans Pro", -apple-system, BlinkMacSystemFont, "Segoe UI",
+               "Apple SD Gothic Neo", "Malgun Gothic", "맑은 고딕", Roboto, sans-serif);
   font-size: var(--cv-body-size, 12px);
   line-height: var(--cv-line-height, 1.5);
 }
@@ -108,7 +108,7 @@
 
 /* External links (email, ORCID, website, social) */
 .cv-link {
-  color: #2f6feb;
+  color: var(--cv-accent, #2f6feb);
   text-decoration: none;
   cursor: pointer;
 }
@@ -121,10 +121,10 @@
   position: relative;
   font-size: var(--cv-heading-size, 13.5px);
   font-weight: 600;
-  color: #2f6feb;
+  color: var(--cv-accent, #2f6feb);
   margin: 16px 0 8px;
   padding: 0 0 4px 22px;
-  border-bottom: var(--cv-rule-width, 1.5px) solid #d0dcf0;
+  border-bottom: var(--cv-rule-width, 1.5px) solid color-mix(in srgb, var(--cv-accent, #2f6feb) 25%, #ffffff);
   letter-spacing: 0.02em;
 }
 .cv-h2::before {
@@ -134,7 +134,7 @@
   top: 6px;
   width: 14px;
   height: 3px;
-  background: #2f6feb;
+  background: var(--cv-accent, #2f6feb);
   border-radius: 2px;
 }
 .cv-section-intro {

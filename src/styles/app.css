@@ -82,8 +82,8 @@ button { font-family: inherit; }
   box-shadow: var(--shadow);
 }
 
-.header-actions { display: flex; gap: 8px; align-items: center; justify-content: flex-end; }
-.header-actions .status { font-size: 12px; color: var(--text-muted); margin-right: 8px; }
+.header-actions { display: flex; gap: 6px; align-items: center; justify-content: flex-end; flex-wrap: wrap; }
+.header-actions .status { font-size: 12px; color: var(--text-muted); margin-right: 4px; }
 
 /* Language switch (KO / EN) */
 .lang-switch { display: inline-flex; background: #eef0f3; border-radius: 8px; padding: 2px; }
@@ -103,6 +103,18 @@ button { font-family: inherit; }
   font-weight: 600;
 }
 
+/* Theme preset dropdown (header) */
+.theme-select {
+  max-width: 150px;
+  padding: 3px 6px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: #fff;
+  font-size: 12px;
+  color: var(--text);
+  cursor: pointer;
+}
+
 .btn {
   padding: 6px 12px;
   border-radius: 6px;
@@ -111,6 +123,7 @@ button { font-family: inherit; }
   color: var(--text);
   cursor: pointer;
   font-size: 13px;
+  white-space: nowrap;
 }
 .btn:hover { background: #f5f7fa; }
 .btn:disabled { opacity: 0.5; cursor: not-allowed; }
@@ -151,6 +164,18 @@ button { font-family: inherit; }
 .style-row > span { display: flex; justify-content: space-between; align-items: baseline; }
 .style-row em { font-style: normal; color: var(--text); font-weight: 600; }
 .style-row input[type="range"] { width: 100%; accent-color: var(--accent); cursor: pointer; }
+.style-row input[type="color"] { width: 100%; height: 28px; padding: 1px; border: 1px solid var(--border); border-radius: 6px; background: #fff; cursor: pointer; }
+.style-row select {
+  width: 100%;
+  padding: 5px 8px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: #fff;
+  font-size: 12px;
+  font-family: inherit;
+  color: var(--text);
+  cursor: pointer;
+}
 .style-reset { margin-top: 2px; align-self: flex-start; }
 .style-hint { font-size: 11px; color: var(--text-muted); margin: 0; line-height: 1.4; }
 
