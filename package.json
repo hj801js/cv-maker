@@ -14,7 +14,8 @@
     "gen-icon": "node scripts/gen-icon.mjs",
     "pack": "vite build && electron-builder --dir",
     "dist": "vite build && electron-builder",
-    "smoke": "node scripts/smoke.mjs"
+    "smoke": "node scripts/smoke.mjs",
+    "screenshots": "node scripts/screenshot.mjs"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^5.2.1",
@@ -50,6 +51,19 @@
         "nsis",
         "portable"
       ]
+    },
+    "mac": {
+      "target": [
+        "dmg",
+        "zip"
+      ],
+      "category": "public.app-category.productivity"
+    },
+    "linux": {
+      "target": [
+        "AppImage"
+      ],
+      "category": "Office"
     }
   }
 }

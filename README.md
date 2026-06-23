@@ -2,6 +2,8 @@
 
 *An offline, bilingual (Korean / English) desktop résumé maker built with Electron + Vue 3. Open source, MIT licensed.*
 
+[![CI](https://github.com/hj801js/cv-maker/actions/workflows/ci.yml/badge.svg)](https://github.com/hj801js/cv-maker/actions/workflows/ci.yml)
+
 오프라인 데스크톱 이력서(CV) 편집기입니다. **Electron + Vue 3**으로 만들었고, 데이터는
 서버 없이 로컬 JSON 파일에 저장됩니다. 한 사람의 이력서를 **한국어 / 영어 두 벌**로 따로
 관리하고, 화면에서 본 그대로 **A4 PDF**로 내보낼 수 있습니다.
@@ -12,6 +14,16 @@
 - 여러 개의 이름 있는 프로필(서로 다른 이력서)을 두고 드롭다운으로 전환.
 - ORCID에서 논문/특허를 가져와 최신순 자동 정렬.
 - 편집 즉시 자동 저장(디바운스) + `.bak` 백업.
+
+## 화면
+
+**편집** — 왼쪽에서 섹션 표시·순서, 오른쪽에서 항목 편집
+![편집 화면](docs/editor.png)
+
+**미리보기 + 스타일** — A4 미리보기(WYSIWYG)와 우측 스타일 사이드바
+![미리보기 화면](docs/preview.png)
+
+> 화면의 데이터는 함께 배포되는 샘플(가상 인물 *홍길동 / Gildong Hong*)입니다.
 
 ---
 
