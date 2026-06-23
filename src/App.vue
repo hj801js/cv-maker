@@ -8,7 +8,7 @@ import PreviewPane from './components/PreviewPane.vue';
 import Toasts from './components/Toasts.vue';
 import { useToast } from './composables/useToast.js';
 
-const { state, lang, active, setLang, isSectionVisible, toggleSection, order, moveSection, isTableOn, toggleTable, setStyle, resetStyle, save, exportPdf, pickDataDir, syncOrcid, importData, exportData, switchProfile, saveAsProfile, renameProfile, deleteProfile } =
+const { state, lang, active, setLang, isSectionVisible, toggleSection, order, moveSection, isTableOn, toggleTable, setStyle, resetStyle, THEMES, themeId, setTheme, save, exportPdf, pickDataDir, syncOrcid, importData, exportData, switchProfile, saveAsProfile, renameProfile, deleteProfile } =
   useCv();
 const { notify } = useToast();
 
@@ -162,6 +162,10 @@ async function onSyncOrcid() {
           <button :class="{ active: lang === 'ko' }" @click="setLang('ko')">한국어</button>
           <button :class="{ active: lang === 'en' }" @click="setLang('en')">EN</button>
         </div>
+        <select class="theme-select" :value="themeId" @change="setTheme($event.target.value)" title="테마">
+          <option v-if="!THEMES.some(t => t.id === themeId)" value="">사용자 설정</option>
+          <option v-for="t in THEMES" :key="t.id" :value="t.id">{{ t.nameKo }}</option>
+        </select>
         <span class="status">{{ statusText }}</span>
         <button class="btn" @click="save" :disabled="!state.dirty || state.saving || state.syncing">
           {{ labels.actions.save }}
@@ -297,6 +301,17 @@ async function onSyncOrcid() {
           <label class="style-row">
             <span>선 굵기 <em>{{ state.data.style.ruleWidth }}</em></span>
             <input type="range" min="0.5" max="4" step="0.5" :value="state.data.style.ruleWidth" @input="setStyle('ruleWidth', +$event.target.value)" />
+          </label>
+          <label class="style-row">
+            <span>강조 색</span>
+            <input type="color" :value="state.data.style.accent" @input="setStyle('accent', $event.target.value)" />
+          </label>
+          <label class="style-row">
+            <span>글꼴</span>
+            <select :value="state.data.style.font" @change="setStyle('font', $event.target.value)">
+              <option value="sans">산세리프</option>
+              <option value="serif">세리프</option>
+            </select>
           </label>
           <button class="btn btn-ghost style-reset" @click="resetStyle">기본값으로 초기화</button>
           <p class="style-hint">미리보기·PDF에 바로 반영됩니다.</p>

@@ -166,6 +166,7 @@ async function loadCv() {
     order: Array.isArray(cfg.order) ? cfg.order : [],
     tableSections: Array.isArray(cfg.tableSections) ? cfg.tableSections : [], // KO-only table style
     style: (cfg.style && typeof cfg.style === 'object') ? cfg.style : {},
+    themeId: typeof cfg.themeId === 'string' ? cfg.themeId : 'modern',
     hiddenSections: { ko: kr.hidden, en: en.hidden },
     ko: kr.cv,
     en: en.cv
@@ -188,6 +189,7 @@ async function saveCv(data) {
   if (Array.isArray(data.order)) cfg.order = data.order;
   if (Array.isArray(data.tableSections)) cfg.tableSections = data.tableSections;
   if (data.style && typeof data.style === 'object') cfg.style = data.style;
+  if (typeof data.themeId === 'string') cfg.themeId = data.themeId;
   await writeConfig(cfg);
   return { ok: true, path: dataDir };
 }
@@ -396,6 +398,15 @@ async function runSmoke() {
     const sizeReset = await evalJs("getComputedStyle(document.querySelector('.cv-sheet')).fontSize");
     rec('styleReset', sizeReset === sizeBefore, { sizeReset });
     await shot('preview.png'); // preview + style sidebar (Korean)
+
+    // Theme preset: selecting the 'academic' (serif) theme changes the live font.
+    const fontBefore = await evalJs("getComputedStyle(document.querySelector('.cv-sheet')).fontFamily");
+    await evalJs("var sel=document.querySelector('.theme-select'); if(sel){sel.value='academic'; sel.dispatchEvent(new Event('change',{bubbles:true}));} true");
+    await sleep(300);
+    const fontAfter = await evalJs("getComputedStyle(document.querySelector('.cv-sheet')).fontFamily");
+    rec('themeSwitch', /serif|georgia/i.test(String(fontAfter)) && fontAfter !== fontBefore, { fontAfter: String(fontAfter).slice(0, 48) });
+    await evalJs("var sel=document.querySelector('.theme-select'); if(sel){sel.value='modern'; sel.dispatchEvent(new Event('change',{bubbles:true}));} true");
+    await sleep(200);
 
     await evalJs("document.body.classList.add('print-mode'); true");
     await sleep(300);

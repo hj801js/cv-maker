@@ -3,6 +3,7 @@ import { MAIN_SECTION_KEYS } from '../schema.js';
 import { normalizeOrder } from '../lib/order.js';
 import { normalizeTitle, classify, sortPublicationsNewestFirst } from '../lib/publications.js';
 import { normalizeCv } from '../lib/normalizeCv.js';
+import { THEMES, getTheme } from '../lib/themes.js';
 
 const state = reactive({
   data: null,
@@ -80,12 +81,11 @@ function toggleTable(key) {
 
 // ----- Document style (font sizes, line height, rule width) -----
 // App-level (persisted in config.json), surfaced to the preview/PDF as CSS vars.
-const DEFAULT_STYLE = {
-  nameSize: 28,
-  headingSize: 13.5,
-  bodySize: 12,
-  lineHeight: 1.5,
-  ruleWidth: 1.5
+const DEFAULT_STYLE = { ...getTheme('modern').tokens };
+// Token 'font' -> full font-family stack applied to the preview/PDF.
+const FONT_STACKS = {
+  sans: '"Source Sans Pro", -apple-system, BlinkMacSystemFont, "Segoe UI", "Apple SD Gothic Neo", "Malgun Gothic", "맑은 고딕", Roboto, sans-serif',
+  serif: 'Georgia, "Times New Roman", "Nanum Myeongjo", "바탕", Batang, serif'
 };
 const styleVars = computed(() => {
   const s = (state.data && state.data.style) || DEFAULT_STYLE;
@@ -95,17 +95,28 @@ const styleVars = computed(() => {
     '--cv-heading-size': `${n(s.headingSize, DEFAULT_STYLE.headingSize)}px`,
     '--cv-body-size': `${n(s.bodySize, DEFAULT_STYLE.bodySize)}px`,
     '--cv-line-height': String(n(s.lineHeight, DEFAULT_STYLE.lineHeight)),
-    '--cv-rule-width': `${n(s.ruleWidth, DEFAULT_STYLE.ruleWidth)}px`
+    '--cv-rule-width': `${n(s.ruleWidth, DEFAULT_STYLE.ruleWidth)}px`,
+    '--cv-accent': (s.accent || DEFAULT_STYLE.accent),
+    '--cv-font': (FONT_STACKS[s.font] || FONT_STACKS.sans)
   };
 });
 function setStyle(key, value) {
   if (!state.data) return;
   if (!state.data.style || typeof state.data.style !== 'object') state.data.style = { ...DEFAULT_STYLE };
   state.data.style[key] = value;
+  state.data.themeId = ''; // manual tweak => custom (no preset selected)
 }
 function resetStyle() {
   if (!state.data) return;
   state.data.style = { ...DEFAULT_STYLE };
+  state.data.themeId = 'modern';
+}
+// Selected theme preset id ('' = custom/manual tweaks). Defaults to 'modern'.
+const themeId = computed(() => (state.data && state.data.themeId) || 'modern');
+function setTheme(id) {
+  if (!state.data) return;
+  state.data.style = { ...getTheme(id).tokens };
+  state.data.themeId = id;
 }
 
 let initialized = false;
@@ -156,6 +167,7 @@ async function load() {
       if (!state.data.hiddenSections) state.data.hiddenSections = { ko: [], en: [] };
       if (!Array.isArray(state.data.tableSections)) state.data.tableSections = [];
       state.data.style = { ...DEFAULT_STYLE, ...(state.data.style && typeof state.data.style === 'object' ? state.data.style : {}) };
+      state.data.themeId = typeof state.data.themeId === 'string' ? state.data.themeId : 'modern';
       state.data.order = order.value; // normalize to the full reorderable set
       // resume deep-watch on next tick
       setTimeout(() => { suppressWatch = false; }, 0);
@@ -429,6 +441,9 @@ export function useCv() {
     styleVars,
     setStyle,
     resetStyle,
+    THEMES,
+    themeId,
+    setTheme,
     load,
     save: flush,
     async exportPdf() {
