@@ -5,9 +5,12 @@ import { sections, sectionLabel, PINNED_SECTION_KEYS, TABLE_SECTION_KEYS } from 
 import { labels } from './i18n/ko.js';
 import EditorPane from './components/EditorPane.vue';
 import PreviewPane from './components/PreviewPane.vue';
+import Toasts from './components/Toasts.vue';
+import { useToast } from './composables/useToast.js';
 
 const { state, lang, active, setLang, isSectionVisible, toggleSection, order, moveSection, isTableOn, toggleTable, setStyle, resetStyle, save, exportPdf, pickDataDir, syncOrcid, importData, exportData, switchProfile, saveAsProfile, renameProfile, deleteProfile } =
   useCv();
+const { notify } = useToast();
 
 const mode = ref('editor'); // 'editor' | 'preview'
 const activeSection = ref(sections[0].key);
@@ -43,9 +46,9 @@ async function onExport() {
   try {
     const res = await exportPdf();
     if (res.ok) {
-      alert(`PDF 저장됨: ${res.path}`);
+      notify(`PDF 저장됨: ${res.path}`, 'success');
     } else if (!res.canceled) {
-      alert(`내보내기 실패: ${res.error || '알 수 없는 오류'}`);
+      notify(`내보내기 실패: ${res.error || '알 수 없는 오류'}`, 'error');
     }
   } finally {
     mode.value = prevMode;
@@ -55,23 +58,23 @@ async function onExport() {
 async function onPickDir() {
   const res = await pickDataDir();
   if (res.ok) {
-    alert(`데이터 폴더가 변경되었습니다: ${res.path}`);
+    notify(`데이터 폴더가 변경되었습니다: ${res.path}`, 'success');
   }
 }
 
 async function onImport() {
   const res = await importData();
   if (res.ok) {
-    alert(`${res.lang === 'ko' ? '한글' : '영문'} 이력서를 불러왔습니다.`);
+    notify(`${res.lang === 'ko' ? '한글' : '영문'} 이력서를 불러왔습니다.`, 'success');
   } else if (!res.canceled) {
-    alert(`불러오기 실패: ${res.error || '알 수 없는 오류'}`);
+    notify(`불러오기 실패: ${res.error || '알 수 없는 오류'}`, 'error');
   }
 }
 
 async function onExportData() {
   const res = await exportData();
-  if (res.ok) alert(`JSON으로 내보냈습니다: ${res.path}`);
-  else if (!res.canceled) alert(`내보내기 실패: ${res.error || '알 수 없는 오류'}`);
+  if (res.ok) notify(`JSON으로 내보냈습니다: ${res.path}`, 'success');
+  else if (!res.canceled) notify(`내보내기 실패: ${res.error || '알 수 없는 오류'}`, 'error');
 }
 
 // ----- Profiles -----
@@ -84,19 +87,19 @@ async function confirmProfilePrompt() {
   const name = (value || '').trim();
   if (!name) return;
   const res = mode === 'new' ? await saveAsProfile(name) : await renameProfile(state.activeProfile, name);
-  if (res && !res.ok) { alert(res.error || '실패했습니다.'); return; }
+  if (res && !res.ok) { notify(res.error || '실패했습니다.', 'error'); return; }
   cancelProfilePrompt();
 }
 async function onSwitchProfile(name) {
   const res = await switchProfile(name);
-  if (res && !res.ok) alert(res.error || '프로필 전환 실패');
+  if (res && !res.ok) notify(res.error || '프로필 전환 실패', 'error');
 }
 async function onDeleteProfile() {
   if (!state.activeProfile) return;
-  if ((state.profiles || []).length <= 1) { alert('마지막 프로필은 삭제할 수 없습니다.'); return; }
+  if ((state.profiles || []).length <= 1) { notify('마지막 프로필은 삭제할 수 없습니다.', 'error'); return; }
   if (!confirm(`'${state.activeProfile}' 프로필을 삭제할까요?`)) return;
   const res = await deleteProfile(state.activeProfile);
-  if (res && !res.ok) alert(res.error || '삭제 실패');
+  if (res && !res.ok) notify(res.error || '삭제 실패', 'error');
 }
 
 onMounted(() => {
@@ -111,27 +114,19 @@ const orcidPresent = computed(() => !!active.value?.basicInfo?.orcid);
 
 async function onSyncOrcid() {
   if (!orcidPresent.value) {
-    alert('기본 정보에 ORCID ID를 먼저 입력하세요.');
+    notify('기본 정보에 ORCID ID를 먼저 입력하세요.', 'info');
     return;
   }
   const res = await syncOrcid();
   if (!res.ok) {
-    alert(`ORCID 동기화 실패: ${res.error}`);
+    notify(`ORCID 동기화 실패: ${res.error}`, 'error');
     return;
   }
   const s = res.summary;
-  alert(
-    [
-      'ORCID 동기화 완료',
-      `총 ${s.total}건 조회`,
-      `저널 추가: ${s.addedJournals}`,
-      `학회 추가: ${s.addedConferences}`,
-      `특허 추가: ${s.addedPatents}`,
-      `중복 건너뜀: ${s.skippedDuplicates}`,
-      `미분류: ${s.unclassified}`,
-      '',
-      '논문은 최신순으로 정렬되었습니다.'
-    ].join('\n')
+  notify(
+    `ORCID 동기화 완료 — 저널 +${s.addedJournals}, 학회 +${s.addedConferences}, 특허 +${s.addedPatents} (중복 ${s.skippedDuplicates}건 건너뜀, 총 ${s.total}건 조회). 논문은 최신순 정렬됨.`,
+    'success',
+    6000
   );
 }
 </script>
@@ -311,5 +306,7 @@ async function onSyncOrcid() {
 
     <div v-else-if="state.loading" class="loading">{{ labels.status.loading }}</div>
     <div v-else class="loading error">{{ labels.status.error }}: {{ state.error }}</div>
+
+    <Toasts />
   </div>
 </template>
