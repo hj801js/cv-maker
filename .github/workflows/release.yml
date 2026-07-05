@@ -9,6 +9,11 @@ on:
     tags: ['v*']
   workflow_dispatch:
 
+# The default GITHUB_TOKEN is read-only in this repo; the release-attach step
+# needs write access to create/update the GitHub Release.
+permissions:
+  contents: write
+
 jobs:
   build:
     strategy:
