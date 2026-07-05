@@ -21,6 +21,18 @@ export const THEMES = [
     name: 'Academic Serif',
     nameKo: '학술 세리프',
     tokens: { accent: '#1f1f1f', font: 'serif', nameSize: 26, headingSize: 13, bodySize: 12, lineHeight: 1.5, ruleWidth: 1 }
+  },
+  {
+    id: 'deepgreen',
+    name: 'Deep Green',
+    nameKo: '딥 그린',
+    tokens: { accent: '#0f6e56', font: 'sans', nameSize: 28, headingSize: 13.5, bodySize: 12, lineHeight: 1.5, ruleWidth: 1.5 }
+  },
+  {
+    id: 'burgundy',
+    name: 'Burgundy Serif',
+    nameKo: '버건디 세리프',
+    tokens: { accent: '#7a2743', font: 'serif', nameSize: 27, headingSize: 13, bodySize: 12, lineHeight: 1.5, ruleWidth: 1 }
   }
 ];
 
