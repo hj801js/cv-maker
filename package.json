@@ -1,7 +1,7 @@
 {
   "name": "cv-maker",
   "private": true,
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Offline desktop CV maker (Electron + Vue 3) — bilingual (KO/EN), per-profile JSON data.",
   "author": "Heejin Kim",
   "license": "MIT",
