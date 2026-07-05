@@ -135,6 +135,12 @@ async function onSyncOrcid() {
   <div class="app-shell" :class="{ 'is-preview': mode === 'preview' }">
     <header class="app-header no-print">
       <div class="brand">
+        <svg class="brand-logo" width="23" height="23" viewBox="0 0 23 23" aria-hidden="true">
+          <rect width="23" height="23" rx="6" fill="#2f6feb" />
+          <text x="11.5" y="11.5" text-anchor="middle" dominant-baseline="central"
+                fill="#fff" font-size="10" font-weight="700"
+                font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif">CV</text>
+        </svg>
         <span class="brand-name">{{ labels.app.title }}</span>
         <span class="brand-dirty">{{ dirtyMark }}</span>
         <select
