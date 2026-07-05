@@ -4,8 +4,8 @@ import { THEMES, getTheme } from '../src/lib/themes.js';
 const TOKEN_KEYS = ['nameSize', 'headingSize', 'bodySize', 'lineHeight', 'ruleWidth', 'accent', 'font'];
 
 describe('themes (document theme presets)', () => {
-  it('exposes exactly the three documented presets', () => {
-    expect(THEMES.map((t) => t.id)).toEqual(['modern', 'classic', 'academic']);
+  it('exposes exactly the five documented presets', () => {
+    expect(THEMES.map((t) => t.id)).toEqual(['modern', 'classic', 'academic', 'deepgreen', 'burgundy']);
   });
 
   it('looks up a theme by id', () => {
